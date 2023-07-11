@@ -169,5 +169,6 @@ https://elyra.readthedocs.io/en/latest/user_guide/runtime-conf.html
 
 # V) Setup Katib
 - Once our pipeline is ready we need to optimize the model used. For this reason, we will use the Katib component in Kubeflow which will allow the team to find the perfect combinations of hyperparameters that provide the best metrics.
+- To use Katib you need to create a Docker image containing the training notebook and used the dataset and requirements file. We then put image in our manifest file corresponding to the needed experiment.
 - To create a Katib experiment the team needs to generate a yaml file (All the files are inside the Katib folder in this repositories).
-- Each experiment will have its own graph resuming the different combinations in each trial. ( Experiments results are resumed in the katib captures folder)
+- Each experiment will have its own graph resuming the different combinations in each trial. ( Experiments results are resumed in the Katib captures folder)
