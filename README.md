@@ -1,38 +1,40 @@
 # MlOps_Project_Setup
 # Table of Contents
-- Kubeflow
-- Elyra
-- Katib
-- Kubeflow set up
-- Kubeadm set up
-- Cluster configuration
-- Start Elyra
-- Start Katib
+- Introduction
+- Technologies used
+- Kubeadm cluster setup
+- Elyra pipeline setup
+- Katib setup
 
+# I) Introduction
 
-# Let's define Kubeflow
-- Kubeflow is an open-source platform designed to make it easier to deploy and manage machine learning (ML) workflows on Kubernetes, an open-source container orchestration system.
+- This repository describes different steps needed to set up this Mlops project. First, we will establish our Kubeflow infrastructure on the top of a Kubeadm cluster. Then we will start to use Kubeflow external add-on Elyra to create our first pipeline. Once the pipeline is created we will use Katib to hyperparameter tune our model using algorithms such as Bayesian optimization, random search, and Grid search.
+
+# II) Technologies used
+
+- Let's define Kubeflow
+ Kubeflow is an open-source platform designed to make it easier to deploy and manage machine learning (ML) workflows on Kubernetes, an open-source container orchestration system.
   
 ![téléchargement (10)](https://github.com/SkanderBahrini/Kubeflow-setup/assets/74383561/6a1b2b77-a5be-4f94-a559-d651a375d644)
 
-# Kubeflow offers a set of external add-ons:
-
-# Elyra
-- Elyra is an open-source project that provides a set of tools and extensions for developing and running machine learning (ML) pipelines in various environments. It focuses on simplifying the creation and deployment of ML pipelines by providing a visual interface and a collection of pre-built components.
+-  Elyra
+Elyra is an open-source project that provides tools and extensions for developing and running machine learning (ML) pipelines in various environments. It focuses on simplifying the creation and deployment of ML pipelines by providing a visual interface and a collection of pre-built components.
 
 
 ![48364812 (2)](https://github.com/SkanderBahrini/Kubeflow-setup/assets/74383561/50018c9f-697d-4b63-b3e5-82f34bd05f67)
 
-# Katib
-- Katib is an open-source project that provides automated hyperparameter tuning and optimization for machine learning (ML) models. It is designed to help data scientists and ML practitioners efficiently search for the best combination of hyperparameters that optimize the performance of their models.
+- Katib
+Katib is an open-source project that provides automated hyperparameter tuning and optimization for machine learning (ML) models. It is designed to help data scientists and ML practitioners efficiently search for the best combination of hyperparameters that optimize the performance of their models.
 
 ![téléchargement (11)](https://github.com/SkanderBahrini/Kubeflow-setup/assets/74383561/51fffa7e-3188-4325-b149-bd9408402364)
 
 
-# Kubeflow-Setup
+# III) Kubeadm cluster setup
 This repository will resume my capstone project entitled "Machine learning pipeline automation using Mlops tool Kubeflow".
 
 The project was done using a VMware virtual machine with the following settings:
+
+# 1 Virtual machine setup 
 
 ![Virtual Machine setup](https://github.com/SkanderBahrini/Kubeflow-setup/assets/74383561/897ef97f-6fab-4903-a112-5656d49bc594)
 
@@ -42,9 +44,9 @@ The entire infrastructure was built on top of a single-node Kubeadm cluster.
 
 The following instruction will guide you throughout the setup process:
 
-# Set up Docker
+ Set up Docker
 Source: https://docs.docker.com/engine/install/ubuntu/
-First, we need to install Docker on our virtual machine using the following commands.
+First, we must install Docker on our virtual machine using the following commands.
 - Update the packages list and install the required packages
 ```
 sudo apt-get update
@@ -91,7 +93,7 @@ sudo systemctl restart docker
 sudo modprobe overlay
 sudo modprobe br_netfilter
 ```
-# SETUP KUBEADM
+# 2 SETUP KUBEADM
 - Kubeadm is Kubernetes project that allows users to set up a  boptstraped version of Kubernetes clusterson their serbverz
 source: https://phoenixnap.com/kb/install-kubernetes-on-ubuntu
 
@@ -150,7 +152,7 @@ kubectl create -f https://raw.githubusercontent.com/rancher/local-path-provision
 kubectl patch storageclass local-path -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
 
 ```
-# Start Using Elyra
+# IV) Setup Elyra pipeline
 
 - To use Elyra we need to access Kubeflow Dashboard and access to notebook servers.
   
@@ -165,4 +167,7 @@ https://elyra.readthedocs.io/en/latest/user_guide/runtime-conf.html
 
 - Once the Notebooks server is ready we can obtain a pipeline as follows:![Capture d’écran 2023-05-17 163505](https://github.com/SkanderBahrini/Kubeflow-setup/assets/74383561/9c315f0e-d0cd-4d08-8f20-178707b0d832)
 
-# Use Katib
+# V) Setup Katib
+- Once our pipeline is ready we need to optimize the model used. For this reason, we will use the Katib component in Kubeflow which will allow the team to find the perfect combinations of hyperparameters that provide the best metrics.
+- To create a Katib experiment the team needs to generate a yaml file (All the files are inside the Katib folder in this repositories).
+- Each experiment will have its own graph resuming the different combinations in each trial. ( Experiments results are resumed in the katib captures folder)
